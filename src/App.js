@@ -3,8 +3,31 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 function App() {
+  let [sec, setSec] = useState(parseInt(0));
+  let [min, setMin] = useState(0);
+  let [hr, setHr] = useState(0);
+  let [timer, setTimer] = useState(false);
+  let [id, setId] = useState(null);
+  let [timeInSec, setTimeInSec] = useState(0);
 
-
+  useEffect(() => {
+    setTimeInSec(
+      (prev) =>
+        (prev = parseInt(sec) + parseInt(min * 60) + parseInt(hr * 60 * 60))
+    );
+    console.log(timeInSec)
+    if (timer && parseInt(timeInSec) >= 0) {
+      let intervelId = setInterval(() => {
+        setTimeInSec((prev) => (prev = parseInt(prev) - 1));
+      }, 1000);
+      setId((prev) => (prev = intervelId));
+    } else {
+      clearInterval(id);
+    }
+    return () => {
+      clearInterval(setId)
+    }
+  }, [timer]);
   return (
     <div className="App">
       <div className="container">
@@ -18,6 +41,10 @@ function App() {
                 min="0"
                 max="12"
                 placeholder="00"
+                value={hr}
+                onChange={(event) =>
+                  setHr((prev) => (prev = event.target.value))
+                }
               />
             </div>
             <div>
@@ -27,7 +54,10 @@ function App() {
                 min={"0"}
                 max="60"
                 placeholder="00"
-
+                value={min}
+                onChange={(event) =>
+                  setMin((prev) => (prev = event.target.value))
+                }
               />
             </div>
             <div>
@@ -37,19 +67,38 @@ function App() {
                 min={"0"}
                 max="60"
                 placeholder="00"
-
+                value={sec}
+                onChange={(event) =>
+                  setSec((prev) => (prev = event.target.value))
+                }
               />
             </div>
           </div>
 
           <div className="timeInSecMsg">
-            <span>time in sec</span> <span className="time">00</span> 
+            <span>time in sec</span> <span className="time">{timeInSec}</span>
           </div>
         </div>
         <div className="buttonsDiv">
-          <button className="reset">Reset</button>
-          <button className="stop">Stop</button>
-          <button className="start">
+          <button
+            className="reset"
+            onClick={() => {
+              setTimer((prev) => (prev = false));
+              setHr((prev) => (prev = 0));
+              setMin((prev) => (prev = 0));
+              setSec((prev) => (prev = 0));
+              setTimeInSec((prev) => (prev = 0));
+            }}
+          >
+            Reset
+          </button>
+          <button className="stop" onClick={() => setTimer((prev) => !prev)}>
+            Stop
+          </button>
+          <button
+            className="start"
+            onClick={() => setTimer((prev) => (prev = true))}
+          >
             Start
           </button>
         </div>
