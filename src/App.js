@@ -7,27 +7,39 @@ function App() {
   let [min, setMin] = useState(0);
   let [hr, setHr] = useState(0);
   let [timer, setTimer] = useState(false);
-  let [id, setId] = useState(null);
   let [timeInSec, setTimeInSec] = useState(0);
 
-  useEffect(() => {
+  function handleTimerFunc() {
+    setTimer(prev => !prev);
     setTimeInSec(
       (prev) =>
         (prev = parseInt(sec) + parseInt(min * 60) + parseInt(hr * 60 * 60))
     );
-    console.log(timeInSec)
-    if (timer && parseInt(timeInSec) >= 0) {
-      let intervelId = setInterval(() => {
-        setTimeInSec((prev) => (prev = parseInt(prev) - 1));
-      }, 1000);
-      setId((prev) => (prev = intervelId));
-    } else {
-      clearInterval(id);
+    
+  }
+
+  useEffect(()=> {
+    function runTime(){
+    if(timeInSec >0){
+      setTimeInSec(prev => prev -= 1)
+      console.warn(timeInSec)
     }
-    return () => {
-      clearInterval(setId)
-    }
-  }, [timer]);
+  }
+  let intervelId;
+  intervelId = setTimeout(runTime, 1000);
+  })
+      // useEffect(()=>{
+      //   let intervelId;
+      //   if(timer && timeInSec > 0){
+      //     intervelId = setTimeout(runTime, 1000)
+      //   }
+      //   return (intervelId)=> {
+      //     if(timeInSec <= 0){
+      //       clearInterval(intervelId)
+      //     }
+      //   }
+      // }, [timer])
+
   return (
     <div className="App">
       <div className="container">
@@ -95,10 +107,7 @@ function App() {
           <button className="stop" onClick={() => setTimer((prev) => !prev)}>
             Stop
           </button>
-          <button
-            className="start"
-            onClick={() => setTimer((prev) => (prev = true))}
-          >
+          <button className="start" onClick={handleTimerFunc}>
             Start
           </button>
         </div>

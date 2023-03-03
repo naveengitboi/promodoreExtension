@@ -90,3 +90,45 @@ input
 {
   background-color: rgb(57, 195, 57);
 }
+
+
+@media screen and (max-width:400px) {
+  html,body{
+    width: 400px;
+    height: 400px;
+  }
+  .App{
+    height: 100vh;
+    text-align: center;
+  }
+  .heading
+  {
+    font-size: 1.85rem;
+    
+  }
+  .content{
+    padding: 2rem;
+    margin: 0rem 0 1rem;
+  }
+  label{
+    font-size: 1rem;
+  }
+  input {
+    font-size: 1.15rem;
+    margin: .85rem;
+
+  }
+  .timeInSecMsg{
+    padding: 1.25rem;
+
+  }
+  .timeInSecMsg .time 
+  {
+    font-size: 1.85rem;
+    padding: 0 1rem;
+  }
+  .buttonsDiv button 
+  {
+    padding: .65rem 1rem;
+  }
+}
