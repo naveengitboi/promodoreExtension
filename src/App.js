@@ -20,7 +20,7 @@ function App() {
 
   useEffect(()=> {
     function runTime(){
-    if(timeInSec >0){
+    if(timer && timeInSec >0){
       setTimeInSec(prev => prev -= 1)
       console.warn(timeInSec)
     }
@@ -28,17 +28,7 @@ function App() {
   let intervelId;
   intervelId = setTimeout(runTime, 1000);
   })
-      // useEffect(()=>{
-      //   let intervelId;
-      //   if(timer && timeInSec > 0){
-      //     intervelId = setTimeout(runTime, 1000)
-      //   }
-      //   return (intervelId)=> {
-      //     if(timeInSec <= 0){
-      //       clearInterval(intervelId)
-      //     }
-      //   }
-      // }, [timer])
+
 
   return (
     <div className="App">
@@ -99,7 +89,7 @@ function App() {
               setHr((prev) => (prev = 0));
               setMin((prev) => (prev = 0));
               setSec((prev) => (prev = 0));
-              setTimeInSec((prev) => (prev = 0));
+              setTimeInSec((prev) => (prev = 1));
             }}
           >
             Reset
